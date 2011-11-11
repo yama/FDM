@@ -1,0 +1,446 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+  <title>Front End Document Manager Documentation</title>
+
+  <style type="text/css">
+	body {background-color:#c7c2A2; color:black;font-size:13px;}
+	div#all {margin: 0 auto; width:90%;}
+	img {float:left;margin:0 7px 7px 7px;border:1px solid #918259;padding:5px;}
+	h2,ul {clear:left;}
+	p {margin: 10px 20px 0 20px; }
+	code {max-height:50px;}
+	.centre {text-align:center;margin:0 auto;}
+	.top {text-align: center;border:1px solid  #383D5E;padding: 5px;font-weight:bold;width: 6em;background-color:#d4d0c8;}
+
+	a:link { color: #383D5E;  }
+	a:visited { color: #383D5E; }/*#5a385f; */
+	a:hover { color:#515F38; background: #C4C7DA;  }
+	a:active { color: #CB1804; }
+
+	/*ul li {padding-left:1em;}*/
+	ul.normal,ul#plansite { list-style-position : outside;margin-left:0;padding-left:5px; }
+	ul.normal {list-style: none;  }
+	li {list-style: none;padding-left:0;margin-left:0;text-indent:0;line-height:1.5em;}
+
+	ul.plan  li:before,ul.topnav  li:before, ul#plansite li:before { content: "\2261 \0020";color:#918259;font-weight:bold;}
+	ul.plan ul li:before, ul.topnav ul li:before, ul#plansite ul li:before { content: "\2514 \0020";color:#918259;font-weight:bold;}
+	ul.plan a {text-decoration:none;font-family: arial, sans-serif;}
+	pre {overflow:auto; max-height:200px;border:2px solid black;width:85%;margin:10px auto;padding:10px;background-color:#faf5d5;}
+
+/* Table */
+table.encadre {
+border:3px solid #918259;
+border-collapse:collapse;
+/*width:90%;*/
+margin:15px 20px;
+}
+table.encadre thead, table.encadre tfoot {
+background-color:#d4d0c8;
+border:2px solid #918259;
+}
+table.encadre tbody {
+background-color:#c7c2a2;
+border:1px solid #000;
+}
+table.encadre th {
+font-family:Arial,sans-serif;
+/*font-weight:bold;*/
+border:1px dotted #918259;
+padding:5px;
+background-color:#d4d0c8;
+/*width:25%;*/
+}
+table.encadre td {
+font-family:sans-serif;
+font-size:80%;
+border:1px solid #918259;
+padding:5px;
+text-align:center;
+text-align:left;
+}
+
+/* table.encadre td.centre{text-align:center;} */
+table.encadre td.expl{text-align:left;}
+table.encadre td.centre_image{text-align:center;vertical-align:middle;}
+caption {
+font-family:sans-serif; font-size:1.1em; font-weight:bold;text-decoration:underline;font-style: italic;
+margin-top:15px;
+}
+.error {color:#dd0000;}
+code {background-color:#faf5d5;padding:2px 4px;}
+
+</style>
+
+  </head>
+  <body>
+  <div id="top"></div>
+
+  <h1>Front End Document Manager (FDM) Ver:0.1b</h1>
+<h2>Download and support: <a href="http://modxcms.com/forums/index.php/topic,14977.0.html">FDM</a></h2>
+<!-- <p><a href="catalogue.rar">download all the code.</a></p> -->
+
+<p><strong>Important:</strong>Module as changed in version 0.0.9 so you must install the new one ( <a href="#imod">see the installation</a> ) or remove these lines in the module: </p>
+<pre><code>$snippet['select']['filename']='[snippet]select.php';
+$snippet['select']['description']='Display a listbox of value in forms';
+</code></pre>
+
+<p><strong>Important:</strong>If you use default template in MODx 0.9.6, reselect the template in manager configuration. <a href="http://modxcms.com/bugs/task/900">FS#900</a> </p>
+<p>View <a href="#change">changelog</a> for last change.</p>
+<h2>Table of content</h2>
+  <ul class="plan">
+  <li><a href="#intro">Introduction</a></li>
+  <li><a href="#install">Installation</a>
+  	<ul>
+  		<li><a href="#iman">Manual</a></li>
+  		<li><a href="#imod">Moduled</a></li>
+
+  	</ul>
+  </li>
+
+  <li><a href="#usage">Usage</a>
+  	<ul>
+  		<li><a href="#uperm">User permissions</a></li>
+  		<li><a href="#third">TinyMCE / Ditto</a></li>
+  	</ul>
+  </li>
+  <li><a href="#param">Parameters</a>
+		<ul>
+			<li><a href="#pgene">General</a></li>
+			<li><a href="#pdocu">Document</a></li>
+			<li><a href="#pperm">Permissions</a></li>
+			<li><a href="#pbutt">Buttons</a></li>
+			<li><a href="#peform">Eform</a></li>
+			<li><a href="#ptpl">Template</a></li>
+			<li><a href="#palias">Alias</a></li>
+		</ul>
+  </li>
+<!--  <li><a href="#code">The code</a></li> -->
+  <li><a href="#todo">ToDo</a></li>
+  <li><a href="#thanks">Thanks</a></li>
+  <li><a href="#change">Changelog</a></li>
+</ul>
+
+<h2 id="intro">Introduction</h2>
+
+<p>This snippet allow front end user to add, edit, delete, publish-unpublish document in the front end of MODx without manager loggin and is developped by David (Soda) Piaser (<a href="http://dp-site.fr" title="dp-site">dp-site.fr</a>).</p>
+<p>You can add a document which can be a copy (with tv) of an existing one. The edit part use the great eForm to allow usefull fields validations and mailling report.</p>
+
+
+
+<h2 id="install">Installation</h2>
+
+<h3>Required:</h3>
+<ul>
+	<li>MODx 0.9.5, work on 0.9.6RC3 and 0.9.6</li>
+	<li>eform version at least 1.4.3</li>
+</ul>
+
+
+<h3 id="iman">Manual Installation</h3>
+<p><strong>Note: </strong>The files needed (snippets and chunks) have moved in assets/snippets/FDM/install </p>
+<ol>
+	<li>Upload the assets directory to the root of your site.</li>
+	<li>Create a new snippet in the manager
+		<ul>
+			<li>Name it FDM</li>
+			<li>Copy and paste the content of file [snippet]FDM in the source content the php tags are present in the file so erase it before paste).</li>
+			<li>Optionnal: New category: FDM</li>
+			<li>Save !</li>
+		</ul>
+	</li>
+	<li>You must have a template for eForm wich allow to edit the document fields you want, this is the fdmEform chunk. Create your own or use the provided example.
+		<ul>
+			<li>Create a new chunk in the manager</li>
+			<li>Name it fdmEform (or change the <code>eform_tpl</code> parameter)</li>
+			<li>Copy and paste the content of a file [chunk]FDMeFormTpl in the source content (the php tags are present in the file so erase it before paste).</li>
+			<li>Optionnal: Select category: FDM</li>
+			<li>Save</li>
+		</ul>
+	</li>
+</ol>
+<p class="top"><a  href="#top">Top</a></p>
+
+<h3 id="imod">Moduled Installation</h3>
+<p class="error">Be carrefull, this module will overwrite your modifications in FDM's default chunks and snippets, make a backup before !</p>
+<ul>
+	<li>Upload the assets directory to the root of your site.</li>
+	<li>Create a new module in the manager with the name and description you want (Manager - Modules- Manage Modules - New Module)</li>
+	<li>Copy the content of the file [module]installFDM.php in the source field and save.</li>
+	<li>Logout - Login in the manager to allow it appears.</li>
+	<li>Go to Manager - Modules and click on the new module (installFDM) in the top bar.</li>
+	<li><strong>For next upgrades you just need to upload the file and run this module.</strong></li>
+</ul>
+
+<h2 id="usage">Usage:</h2>
+<p>You call the snippet from a page or a template. The simpliest way is : <code>[!FDM!]</code>. By default Manager users have all permissions, so log in to see the full buttons bar.</p>
+<p>Check the <a  href="#param">Parameters</a>.</p>
+<p>eForm fields validations are supported.</p>
+<p>Use <code>debug=`run`</code> for debug information.</p>
+<h3>To edit TV (more to come :) ).</h3>
+<p><strong>You must prefix tv name with <quote>tv</quote>. </strong><br />
+ie: for a tv called <quote>keywords</quote> : <br />
+<code>
+	&lt;input name="tvkeywords" id ="tvkeywords" name="tvkeywords"value="[+tvkeywords+]" type="text" /&gt;
+</code>
+</p>
+
+<p><strong>Important !</strong> Your eForm's template need to have this:</p>
+<ul>
+	<li><code>&lt;form method="post" action="[~[*id*]~]" <span class="error"> id="fdmForm"</span> &gt;</code></li>
+	<li><code>&lt;input type="hidden" <span class="error">name="formid" value="fdmForm"</span> /&gt;</code></li>
+	<li><code>&lt;input type="hidden" <span class="error">name="fdmid" id="fdmid" value="[+fdmid+]"</span> /&gt;</code></li>
+	<li>...</li>
+	<li><code>&lt;input <span class="error">name="fdmsubmit"</span> value="Enregistrer" type="submit" /&gt;</code></li>
+</ul>
+
+<h3 id="uperm">User permissions</h3>
+
+<table class="encadre" style="width:60%;text-align:center;" summary="Users and permissions" >
+<thead><tr><th>Users / Permissions</th><th>Add</th><th>Edit</th><th>(Un)Publish</th><th>Delete</th><th>is Published ?</th></tr></thead>
+<tbody>
+<tr><th>canmoderate	</th><td>x	</td><td>x	</td><td>x	</td><td>x	</td><td>x	</td></tr>
+<tr><th>canpost			</th><td>x	</td><td>if Author	</td><td>-	</td><td>-	</td><td>- (&amp;moderated=`1`)<br />x (&amp;moderated=`0`) default	</td></tr>
+<tr><th>trusted			</th><td>x	</td><td>if Author	</td><td>-	</td><td>-	</td><td>x	</td></tr>
+<tr><th>anonymous		</th><td>-	(default)<br />x (&amp;anonymous=`1`)</td><td>Just the doc<br /> added (1 time)	</td><td>-	</td><td>-	</td><td>-	</td></tr>
+</tbody>
+<tfoot>
+<tr><td colspan="6"><strong>Legend:</strong> x:YES -:NO.</td></tr>
+<tr><td colspan="6">Manager user are moderator if &amp;disablemanager=`0`(default) / &amp;disablemanager=`1` disable them.</td></tr>
+</tfoot>
+</table>
+
+
+
+
+<h2 id="third">TinyMce / Ditto</h2>
+
+<h3>Use with Ditto</h3>
+<p>Use as usually. You must specify the id parameter (different for each FDM call), use the [+id+] placeholder in ditto template.</p>
+<p>You may have to call FDM uncached if the call is displpayed :<code>[[FDM? ... ]]</code>. </p>
+<h3 id="tiny">TinyMce</h3>
+
+<strong>Important:</strong> FDM use form's fields named as MODx db fields, so if you edit the content of your document with FDM, you need to have an input field named <code>content</code>, be sure that there aren't anywhere in your template an element with the same name/id, or tinyMCE won't work.
+<p><a href="http://wiki.moxiecode.com/index.php/TinyMCE:Configuration">Check the configuration options</a>.</p>
+<p>Now FDM allow you to load dynamically tinyMce only when you need it (when the form is displayed), it save memory and load time.</p>
+<p>Add this code in a chunk or a file. And use FDM's parameter &amp;script=`chunk_name` or &amp;script= `@FILE:path/to/file.htm`.</p>
+<pre>
+<code>
+&lt;script language="javascript" type="text/javascript" src="assets/plugins/tinymce2111/jscripts/tiny_mce/tiny_mce.js"&gt;&lt;/script&gt;
+&lt;script language="javascript" type="text/javascript"&gt;
+
+// Configuration detail check http://wiki.moxiecode.com/index.php/TinyMCE:Configuration
+tinyMCE.init({
+	theme : "advanced",
+	mode : "exact", // textareas:    Converts all textarea elements to editors when the page loads. exact: Converts elements of the specified names, as listed in the elements option.
+// This option should contain a comma separated list of element id's to convert into editor instances. This option is only used if mode is set to "exact".
+//	ie:	elements : "elm1,elm2"
+	elements : "content"
+});
+&lt;/script&gt;
+</code>
+</pre>
+
+<p><strong>Note:</strong> Be sure that the path to tinymce.js is good : Before 0.9.6, tinymce plugin is located in a folder called <em>tinymce</em>.</p>
+
+<p class="top"><a  href="#top">Top</a></p>
+<h2 id="param">Parameters:</h2>
+<p><strong>Note:</strong>For false boolean value, the parameter can be set to `0`,`` or not set at all, all other values means true.</p>
+
+<ul>
+		<li><a href="#pgene">General</a></li>
+			<li><a href="#pdocu">Document</a></li>
+			<li><a href="#pperm">Permissions</a></li>
+			<li><a href="#pbutt">Buttons</a></li>
+			<li><a href="#peform">Eform</a></li>
+			<li><a href="#ptpl">Template</a></li>
+			<li><a href="#palias">Alias</a></li>
+</ul>
+<table class="encadre" style="width:60%;text-align:center;" summary="FDM parameters">
+<thead><tr><th>Name</th><th>Type</th><th>Default</th><th>Meaning</th><th>Comment</th></tr></thead>
+<tbody>
+
+<tr><td colspan="5" id="pdocu"><strong>Document</strong></td></tr>
+<tr><th>&amp;id</th><td>integer</td><td>Current doc id</td><td>Id of the document to be processed</td><td>Required with multiple call (Ditto)</td></tr>
+<tr><th>&amp;parent</th><td>integer</td><td>Current doc parent id</td><td>Id of the document under which the added document is placed.</td><td></td></tr>
+<tr><th>&amp;model</th><td>integer</td><td>Current doc id</td><td>Id of the document model used to create a new one when Add is clicked.</td><td>When you click Add, the &amp;model is copied, and after the form is displayed filled with that copy to edit its fields.<br />If not set or `0`, the form isn't filled.</td></tr>
+<tr><th>&amp;realdelete</th><td>boolean</td><td>0</td><td>Set the bit 'deleted' to 1 (default) or really delete the document.</td><td>If &amp;realdelete is unset (default) when Delete is clicked, the document is still available in the manager as a deleted document and you need to click the trashcan to really delete it.</td></tr>
+
+<tr><td colspan="5" id="pgene"><strong>General</strong></td></tr>
+<tr><th>&amp;language</th><td>string</td><td>english</td><td>Language string</td><td>The english is always set, after we load (if exists) an overwrite the lang file in /FDM/lang/language.inc.php corresponding to your setting in Manager-Tools-Configuration-SiteSettings-Language.</td></tr>
+<tr><th>&amp;debug</th><td>string</td><td>unset</td><td>Display some debug information, can be `run`,`all`,`lang`,`user`,`param`,`doc`.</td><td>`run` (recommanded) to trace execution<br />`all` for all debug's informations.</td></tr>
+<tr><th>&amp;output</th><td>boolean</td><td>1</td><td>Output in placeholder or where the call is.</td><td>If unset you must put a placeholder [+fdmEform+] where you want the form appear. If set (default) the form is displayed where the call is.</td></tr>
+<tr><th>&amp;redirect</th><td>string</td><td>'none'</td><td>Where to go after adding or editing doc.</td><td>Possible value are:<ul><li>`none` (default):no redirection, a link to the new/edited document and a validation message are displayed.</li><li>`parent` :redirect to the parent of the new/edited document.</li><li>`numeric_value`: id of the document you want to be redirected.</li></ul>.If you redirect, you won't see all debug info.</td></tr>
+<tr><th>&amp;editorpageid</th><td>integer</td><td>empty</td><td>Id of the page used for displaying edit form.</td><td>If empty  (default) the form is displayed in the current page in placeholder or replace FDM buttons (see &amp;output parameter). If set to a document id this page is loaded and display the form, you must have the same FDM call on this page.</td></tr>
+<tr><th>&amp;script</th><td>string</td><td>''</td><td>Chunk name, file name or string of script to load when editing or adding a document.</td><td>@FILE:path/to/file.html if your script is in a file or @CODE:your_code. See <a href="#tiny">tinyUsage</a>.</td></tr>
+
+
+
+<tr><td colspan="5" id="pbutt"><strong>Buttons</strong></td></tr>
+<tr><th>&amp;disableadd</th><td>boolean</td><td>0</td><td>Never display the Add button.</td><td></td></tr>
+<tr><th>&amp;disableedit</th><td>boolean</td><td>0</td><td>Never display the Edit button.</td><td></td></tr>
+<tr><th>&amp;disablepublish</th><td>boolean</td><td>0</td><td>Never display the Publish button.</td><td></td></tr>
+<tr><th>&amp;disableunpublish</th><td>boolean</td><td>0</td><td>Never display the Unpublish button.</td><td></td></tr>
+<tr><th>&amp;disabledelete</th><td>boolean</td><td>0</td><td>Never display the Delete button.</td><td></td></tr>
+
+
+<tr><td colspan="5" id="pperm"><strong>Permissions</strong></td></tr>
+<tr><th>&amp;moderated</th><td>boolean</td><td>0</td><td>Enable or disable (default) moderation.</td><td>If enabled, &amp;canpost users aren't published.</td></tr>
+<tr><th>&amp;canpost</th><td>comma separated list of web users group</td><td>unset</td><td>Groups of users which can add docs and edit their own.</td><td>If &amp;moderated is set, &amp;canmoderate users hav theirs docs not published.<br />If it is empty (default) anonymous user can post but aren't published.</td></tr>
+<tr><th>&amp;canmoderate</th><td>comma separated list of web users group</td><td>unset</td><td>Groups of users which can moderate (add-edit-(un)publish-delete) all docs.</td><td>If &amp;disablemanager is not set (default), manager users are moderator.</td></tr>
+<tr><th>&amp;trusted</th><td>comma separated list of web users group</td><td>unset</td><td>Groups of users which can add docs and edit their own. Their documents are always published.</td><td></td></tr>
+<tr><th>&amp;disablemanager</th><td>boolean</td><td>0</td><td>If set, disable Manager User, else Manager User is a moderator.</td><td></td></tr>
+<tr><th>&amp;anonymous</th><td>boolean</td><td>0</td><td>Enable or disable (default) anonymous post.</td><td>If enabled, anonymous user can add an unpublished document.</td></tr>
+
+
+<tr><td colspan="5" id="peform"><strong><a href="http://wiki.modxcms.com/index.php/EForm">eForm</a></strong></td></tr>
+<tr><th>&amp;eform_tpl</th><td>string</td><td>`fdmEform`</td><td>Document id or chunk name which contains the eform template used for edit.</td><td></td></tr>
+<tr><th>&amp;eform_formid</th><td>string</td><td>`fdmForm`</td><td>Value of the attribute id in your form template.</td><td>value in this line: &lt;form method="post" action="[~[*id*]~]"  id="fdmForm"&gt;</td></tr>
+<tr><th>&amp;eform_report</th><td>string</td><td>empty</td><td>Name or document id to use when generating reports, if using the &amp;eform_noemail parameter, this parameter is not required.</td><td>Required if &amp;noemail=`0`.</td></tr>
+<tr><th>&amp;eform_thankyou</th><td>string</td><td>empty</td><td>chunk name (non-numeric) or document id (numeric) to use as a thank you message displayed to the user after a successful submit. Tags: same as for &amp;tpl
+.</td><td></td></tr>
+<tr><th>&amp;eform_noemail</th><td>boolean</td><td>1</td><td>Prevents eform from sending emails e.g. no-reply@mydomain.com Set to 1 to disable emails.</td><td>If set to `0` don't forget to use &amp;eform_report.</td></tr>
+<tr><th>&amp;eform_subject</th><td>string</td><td>`FDM notification your_site_url`</td><td>Subject to appear in email Can include [+form fields+]. E.g. Purcase Order for [+firstname+] [+lastname+].</td><td></td></tr>
+<tr><th>&amp;eform_to</th><td>string</td><td>site settings email address</td><td class"expl">Email address to send eForm information to For multiple recipients separate emails with a comma (,) If omitted the site settings email address will be used.</td><td class"expl">Need &amp;eform_noemail=`0`.</td></tr>
+
+<tr><td colspan="5" id="ptpl"><strong>Template</strong></td></tr>
+<tr><th>&amp;tplLinks</th><td>string</td><td>$_lang['links_template']</td><td class"expl">Chunk name, file name or string of the template for the buttons, by default it is set in use your default language file in /FDM/lang or english</td><td class"expl">@FILE:path/to/file.html if you are defining a template from file or @CODE:your_code.</td></tr>
+
+<tr><td colspan="5" id="palias"><strong>Alias (New)</strong></td></tr>
+<tr><th>&amp;aliastype</th><td>string</td><td>%id%</td><td class"expl">The alias model you want to set<br /><strong>All variables elements must be encapsed in <quote>%</quote></strong><br />All unallowed chars are automatically replaced (accentued chars, space ...)<br /><strong>FDM don't check anymore if alias already exists.</strong><br /><br /> ie: <br />&amp;aliastype=`Art&igrave;cl&eacute; %id% %pagetittle% %tvcategory% %D%`<br /> can produce an alias like : <br />"article 15_my_page_title_category1_09_09_07"</td><td>Specify a string with fields replacement:<br /><u>Use normal fields:</u> %id%, %pagetitle%, %longtitle%, ...<br />Use tv (prefixed with <quote>tv</quote>): %tvMyTvName%<br /><u>Use formatted date elements (specified in aliasdate):</u>
+%D% - same as %m%/%d%/%y%<br />
+%a% - abbreviated weekday name according to the current locale<br />
+%A% - full weekday name according to the current locale<br />
+%b% - abbreviated month name according to the current locale<br />
+%B% - full month name according to the current locale<br />
+%c% - preferred date and time representation for the current locale<br />
+%C% - century number (the year divided by 100 and truncated to an integer, range 00 to 99)<br />
+%d% - day of the month as a decimal number (range 01 to 31)<br />
+%D% - same as %m/%d/%y<br />
+%e% - day of the month as a decimal number, a single digit is preceded by a space (range ' 1' to '31')<br />
+%g% - like %G, but without the century.<br />
+%G% - The 4-digit year corresponding to the ISO week number (see %V). This has the same format and value as %Y, except that if the ISO week number belongs to the previous or next year, that year is used instead.<br />
+%h% - same as %b<br />
+%H% - hour as a decimal number using a 24-hour clock (range 00 to 23)<br />
+%I% - hour as a decimal number using a 12-hour clock (range 01 to 12)<br />
+%j% - day of the year as a decimal number (range 001 to 366)<br />
+%m% - month as a decimal number (range 01 to 12)<br />
+%M% - minute as a decimal number<br />
+%p% - either `am' or `pm' according to the given time value, or the corresponding strings for the current locale<br />
+%r% - time in a.m. and p.m. notation<br />
+%R% - time in 24 hour notation<br />
+%S% - second as a decimal number<br />
+%T% - current time, equal to %H:%M:%S<br />
+%u% - weekday as a decimal number [1,7], with 1 representing Monday<br />
+%U% - week number of the current year as a decimal number, starting with the first Sunday as the first day of the first week<br />
+%V% - The ISO 8601:1988 week number of the current year as a decimal number, range 01 to 53, where week 1 is the first week that has at least 4 days in the current year, and with Monday as the first day of the week. (Use %G or %g for the year component that corresponds to the week number for the specified timestamp.)<br />
+%W% - week number of the current year as a decimal number, starting with the first Monday as the first day of the first week<br />
+%w% - day of the week as a decimal, Sunday being 0<br />
+%x% - preferred date representation for the current locale without the time<br />
+%X% - preferred time representation for the current locale without the date<br />
+%y% - year as a decimal number without a century (range 00 to 99)<br />
+%Y% - year as a decimal number including the century<br />
+%Z% or %z - time zone or name or abbreviation <br />
+
+</td></tr>
+<tr><th>&amp;aliasdate</th><td>string</td><td>created</td><td class"expl">Date used in aliastype replacement.<br />Possible values:<br />editedon ,createdon, publishedon or deletedon</td><td class"expl"></td></tr>
+
+</tbody>
+<tfoot>
+<tr><th>Name</th><th>Type</th><th>Default</th><th>Meaning</th><th>Comment</th></tr>
+
+</tfoot>
+</table>
+
+<p class="top"><a  href="#top">Top</a></p>
+
+<h2 id="todo">TODO</h2>
+<ul>
+	<li>test editorpageid </li>
+	<li>Correct the bugs!</li>
+	<li>Enhance security, more ?</li>
+	<li>Document group.</li>
+	<li>Check locked document before editing.</li>
+	<li>Complete this documentation.</li>
+</ul>
+
+
+ <p class="top"><a  href="#top">Top</a></p>
+
+<h2 id="thanks">Thanks</h2>
+<p>Lot of code and idea are taken from Jot by Armand "bS" Pondman, I use his Chunkie Class and <a href="http://modxcms.com/forums/index.php?topic=7522">PHX</a> too.</p>
+
+<p>The Authors of <a href="http://modxcms.com/eForm-1003.html">eForm</a> Originally developed by Raymond Irving and extended by Jelle Jager (TobyL).</p>
+
+<p>The Author of the <a href="http://www.modxcms.com/forums/index.php?topic=6334">DocManager api class</a>:  ur001 for is cool and easy api, I use a modified version.</p>
+<p>All the MODx team and users which made MODx better and better.</p>
+<p>My girlfriend for her patience.</p>
+
+
+<p class="top"><a  href="#top">Top</a></p>
+
+
+
+<h2 id="change">Changelog</h2>
+<ul>
+<li><strong>0.1b :</strong>
+	<ul>
+		<li>aliastype,aliasdate parameters, default is set to id</li>
+		<li>Rewrite the logic section</li>
+		<li>Better support for Ditto</li>
+		<li>No more MD hash in url</li>
+		<li>script parameter added to load tiny only with the form</li>
+		<li>...</li>
+	</ul>
+</li>
+<li><strong>0.0.991 :</strong> Protect Submit set to 0. Chunkie class renamed. None with editor page id: http://modxcms.com/forums/index.php/topic,14977.msg104065.html#msg104065, included  http://modxcms.com/forums/index.php/topic,14977.msg108314.html#msg108314 by swit4er </li>
+<li><strong>0.0.99 :</strong> @CODE in template.</li>
+<li><strong>0.0.98 :</strong> Makeurl() modified , &amp;editorpageid parameter added.</li>
+<li><strong>0.0.97 :</strong> type of document with no model have default value no more manager problem.</li>
+<li><strong>0.0.96 :</strong> new <a href="#pgene">redirect parameter</a> new debug option: `run`</li>
+<li><strong>0.0.95 :</strong> output parameter re-added for output in [+fdmEform+], lot of test, lot of debug</li>
+<li><strong>0.0.93 :</strong> Edit bug</li>
+<li><strong>0.0.92 :</strong> Correct url with '&amp;' or '?', no FURL link, bug with ouput, temporaly removed.</li>
+<li><strong>0.0.91 :</strong>
+	<ul>
+		<li><a href="#peform">Output parameter</a>, added default fields for new doc else they are not set.</li>
+		<li>New necessary hidden fields added to eform template, see default template</li>
+	</ul>
+</li>
+<li><strong>0.0.9 :</strong>
+	<ul>
+		<li>less sql query improving speed</li>
+		<li>Rewrite add and edit sections</li>
+		<li>When add is cliked nothing is added until the form is send and valid</li>
+		<li>No more need to put a call in the model</li>
+		<li>If  &amp;model=`0` add new empty doc with default template</li>
+		<li>Alias generation changes.</li>
+		<li>New makeUrl function</li>
+		<li>...</li>
+	</ul>
+</li>
+<li><strong>0.0.82 :</strong> Escape Russian chars for generated alias / remove select snippet install in module</li>
+<li><strong>0.0.81 :</strong> Bug with no FURL when adding document</li>
+<li><strong>0.0.80 :</strong> Chunkie class problem </li>
+<li><strong>0.0.79 :</strong> Don't append '1' to new doc's alias </li>
+<li><strong>0.0.78 :</strong> Select removed as it is not validated by eForm, Chunkie class modified </li>
+<li><strong>0.0.77 :</strong> Quick Installation module </li>
+<li><strong>0.0.76 :</strong> Publish Bug </li>
+<li><strong>0.0.75 :</strong> permission array set to array() if null </li>
+<li><strong>0.0.74 :</strong> doc updated</li>
+<li><strong>0.0.73 :</strong> add alias bug</li>
+<li><strong>0.0.72 :</strong> anonymous parameter added check the doc for user permissions</li>
+<li><strong>0.0.71 :</strong> better alias generation</li>
+<li><strong>0.0.70 :</strong> in ditto call only add document only once</li>
+<li><strong>0.0.66 :</strong> model bug</li>
+<li><strong>0.0.65 :</strong> simplify variable set</li>
+<li><strong>0.0.64 :</strong> rewrite user management</li>
+<li><strong>0.0.63 :</strong> : better alias generation for friendly url, add a count to the alias if it exist, &amp;canedit removed</li>
+<li>anonymous post, internalization</li>
+<li>	button can be disabled and bypass user permissions, multiple form solved </li>
+<li>	corrected some bug, multiples call per page, chunk commented in content textarea, [snippet]Select modified</li>
+<li>	...</li>
+</ul>
+  </body>
+</html>
