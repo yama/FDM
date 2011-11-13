@@ -43,9 +43,14 @@ class CFDM {
 	
 	function secure($value)
 	{
+		global $modx;
 		// anti sql injection
-		$value = (get_magic_quotes_gpc())?stripslashes($value):$value;
-		$value = mysql_real_escape_string($value);
+		if(get_magic_quotes_gpc())
+		{
+			include_once $modx->config['base_path'] . 'manager/includes/quotes_stripper.inc.php';
+			kill_magic_quotes($value);
+		}
+		$value = $modx->db->escape($value);
 		return $value;
 	}
 	function Run()

@@ -282,7 +282,10 @@ class FdmDocument{
 		global $modx;
 		$this->fields['editedon']=time();
 		$tablename=$modx->getFullTableName('site_content');
-	  	$escapedFields = array_map(create_function('$n', 'global $modx;if (get_magic_quotes_gpc()) { $n = stripslashes($n);	}return $modx->db->escape($n);'), $this->fields);
+	  	$escapedFields = array_map(create_function(
+	  		'$n',
+	  		'global $modx;if(get_magic_quotes_gpc()) {$n = stripslashes($n);}return $modx->db->escape($n);'),
+	  	$this->fields);
 		if($this->isNew)
 		{
 			$this->fields['id']=$modx->db->insert($escapedFields, $tablename);
