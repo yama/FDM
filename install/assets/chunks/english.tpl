@@ -22,9 +22,9 @@
  <p>
  	<label for="pub_date">Publish Date:</label><br />
   <input name="pub_date" id="pub_date" type="text" value="[+pub_date+]" size="30" readonly="readonly" />
-        <a onClick="nwpub_cal1.popup();" title="Choose the publish date">
+        <a onclick="nwpub_cal1.popup();" title="Choose the publish date">
 		<img align="absmiddle" src="manager/media/calendar/img/cal.gif" width="16" height="16" border="0" alt="Select date" /></a>
-        <a 	onClick="document.forms['fdmForm'].elements['pub_date'].value=''; return true;" >
+        <a onclick="document.forms['fdmForm'].elements['pub_date'].value=''; return true;" >
 		<img align="absmiddle" src="manager/media/style/MODx/images/icons/event3.gif" width="16" height="16" border="0" alt="Remove date"></a>
 	</p>
 </fieldset>
@@ -52,7 +52,7 @@
 	var elm_txt = {}; // dummy
 	var pub = document.forms["fdmForm"].elements["pub_date"];
 	var nwpub_cal1 = new calendar1(pub,elm_txt);
-	nwpub_cal1.path="[(base_url)]manager/media/";
+	nwpub_cal1.path="[(base_url)]assets/snippets/FDM/js/";
 	nwpub_cal1.year_scroll = true;
 	nwpub_cal1.time_comp = true;
 </script>
