@@ -47,7 +47,7 @@
 	<input type="submit" name="clickabort" value="Abort" />
 </form>
 
-<script language="JavaScript" src="manager/media/script/datefunctions.js"></script>
+<script language="JavaScript" src="assets/snippets/FDM/js/calendar/datefunctions.js"></script>
 <script type="text/javascript">
 	var elm_txt = {}; // dummy
 	var pub = document.forms["fdmForm"].elements["pub_date"];
