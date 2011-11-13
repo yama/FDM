@@ -1,4 +1,4 @@
-/**
+<!--/**
  * fdmEform
  * 
  * サンプルテンプレート(FDM用)
@@ -7,7 +7,15 @@
  * @version 	0.2
  * @license 	http://www.gnu.org/copyleft/gpl.html GNU Public License (GPL)
  */
+-->
 [+validationmessage+]
+<style type="text/css">
+div.fdm p {margin:0;padding:0;margin-bottom:1em;}
+div.fdm input[type=text] {width:300px;}
+div.fdm textarea {width:100%;}
+div.fdm textarea,div.fdm input, div.fdm select {font:inherit;}
+</style>
+<div class="fdm">
 <form method="post" action="[~[*id*]~]" id="fdmForm">
 <fieldset>
 	<legend>ページ設定</legend>
@@ -15,7 +23,7 @@
 		<input type="hidden" name="fdmid" value="[+fdmid+]" eform="::0::" />
 	<p>
 		<label for="pagetitle">タイトル</label><br />
-		<input name="pagetitle" id="pagetitle" value="[+pagetitle+]" type="text" eform="タイトル:string:1" />
+		<input name="pagetitle" value="[+pagetitle+]" type="text" eform="タイトル:string:1" />
 	</p>
 	<p>
 		<label>公開日:<br />
@@ -30,7 +38,7 @@
 <fieldset>
 	<legend>内容</legend>
 	<p><label>本文<br />
-		<textarea name="content" id="content" rows="5" cols="50" eform="Du texte:html:1">[+content+]</textarea>
+		<textarea name="content" rows="20" cols="50" eform="Du texte:html:1">[+content+]</textarea>
 		</label>
 	</p>
 </fieldset>
@@ -50,3 +58,4 @@
 	nwpub_cal1.year_scroll = true;
 	nwpub_cal1.time_comp = true;
 </script>
+</div>
