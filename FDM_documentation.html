@@ -5,7 +5,8 @@
   <title>Front End Document Manager Documentation</title>
 
   <style type="text/css">
-	body {background-color:#c7c2A2; color:black;font-size:13px;}
+	html {font-size:100.01%;}
+	body {background-color:#c7c2A2; color:black;font-size:82.5%;font-family: Helvetica, arial, sans-serif;}
 	div#all {margin: 0 auto; width:90%;}
 	img {float:left;margin:0 7px 7px 7px;border:1px solid #918259;padding:5px;}
 	h2,ul {clear:left;}
@@ -22,12 +23,12 @@
 	/*ul li {padding-left:1em;}*/
 	ul.normal,ul#plansite { list-style-position : outside;margin-left:0;padding-left:5px; }
 	ul.normal {list-style: none;  }
-	li {list-style: none;padding-left:0;margin-left:0;text-indent:0;line-height:1.5em;}
+	li {padding-left:0;margin-left:0;text-indent:0;line-height:1.5em;}
 
 	ul.plan  li:before,ul.topnav  li:before, ul#plansite li:before { content: "\2261 \0020";color:#918259;font-weight:bold;}
 	ul.plan ul li:before, ul.topnav ul li:before, ul#plansite ul li:before { content: "\2514 \0020";color:#918259;font-weight:bold;}
-	ul.plan a {text-decoration:none;font-family: arial, sans-serif;}
-	pre {overflow:auto; max-height:200px;border:2px solid black;width:85%;margin:10px auto;padding:10px;background-color:#faf5d5;}
+	ul.plan a {text-decoration:none;}
+	pre {overflow:auto; max-height:200px;border:2px solid black;margin:10px auto;padding:10px;background-color:#faf5d5;}
 
 /* Table */
 table.encadre {
@@ -45,7 +46,6 @@ background-color:#c7c2a2;
 border:1px solid #000;
 }
 table.encadre th {
-font-family:Arial,sans-serif;
 /*font-weight:bold;*/
 border:1px dotted #918259;
 padding:5px;
@@ -53,8 +53,6 @@ background-color:#d4d0c8;
 /*width:25%;*/
 }
 table.encadre td {
-font-family:sans-serif;
-font-size:80%;
 border:1px solid #918259;
 padding:5px;
 text-align:center;
@@ -65,7 +63,7 @@ text-align:left;
 table.encadre td.expl{text-align:left;}
 table.encadre td.centre_image{text-align:center;vertical-align:middle;}
 caption {
-font-family:sans-serif; font-size:1.1em; font-weight:bold;text-decoration:underline;font-style: italic;
+font-weight:bold;text-decoration:underline;
 margin-top:15px;
 }
 .error {color:#dd0000;}
@@ -81,23 +79,12 @@ code {background-color:#faf5d5;padding:2px 4px;}
 <h2>Download and support: <a href="http://modxcms.com/forums/index.php/topic,14977.0.html">FDM</a></h2>
 <!-- <p><a href="catalogue.rar">download all the code.</a></p> -->
 
-<p><strong>Important:</strong>Module as changed in version 0.0.9 so you must install the new one ( <a href="#imod">see the installation</a> ) or remove these lines in the module: </p>
-<pre><code>$snippet['select']['filename']='[snippet]select.php';
-$snippet['select']['description']='Display a listbox of value in forms';
-</code></pre>
-
 <p><strong>Important:</strong>If you use default template in MODx 0.9.6, reselect the template in manager configuration. <a href="http://modxcms.com/bugs/task/900">FS#900</a> </p>
 <p>View <a href="#change">changelog</a> for last change.</p>
 <h2>Table of content</h2>
   <ul class="plan">
   <li><a href="#intro">Introduction</a></li>
-  <li><a href="#install">Installation</a>
-  	<ul>
-  		<li><a href="#iman">Manual</a></li>
-  		<li><a href="#imod">Moduled</a></li>
-
-  	</ul>
-  </li>
+  <li><a href="#install">Installation</a></li>
 
   <li><a href="#usage">Usage</a>
   	<ul>
@@ -138,7 +125,7 @@ $snippet['select']['description']='Display a listbox of value in forms';
 </ul>
 
 
-<h3 id="iman">Manual Installation</h3>
+<h3 id="iman">Installation</h3>
 <p><strong>Note: </strong>The files needed (snippets and chunks) have moved in assets/snippets/FDM/install </p>
 <ol>
 	<li>Upload the assets directory to the root of your site.</li>
@@ -161,17 +148,6 @@ $snippet['select']['description']='Display a listbox of value in forms';
 	</li>
 </ol>
 <p class="top"><a  href="#top">Top</a></p>
-
-<h3 id="imod">Moduled Installation</h3>
-<p class="error">Be carrefull, this module will overwrite your modifications in FDM's default chunks and snippets, make a backup before !</p>
-<ul>
-	<li>Upload the assets directory to the root of your site.</li>
-	<li>Create a new module in the manager with the name and description you want (Manager - Modules- Manage Modules - New Module)</li>
-	<li>Copy the content of the file [module]installFDM.php in the source field and save.</li>
-	<li>Logout - Login in the manager to allow it appears.</li>
-	<li>Go to Manager - Modules and click on the new module (installFDM) in the top bar.</li>
-	<li><strong>For next upgrades you just need to upload the file and run this module.</strong></li>
-</ul>
 
 <h2 id="usage">Usage:</h2>
 <p>You call the snippet from a page or a template. The simpliest way is : <code>[!FDM!]</code>. By default Manager users have all permissions, so log in to see the full buttons bar.</p>
@@ -197,7 +173,7 @@ ie: for a tv called <quote>keywords</quote> : <br />
 
 <h3 id="uperm">User permissions</h3>
 
-<table class="encadre" style="width:60%;text-align:center;" summary="Users and permissions" >
+<table class="encadre" style="text-align:center;" summary="Users and permissions" >
 <thead><tr><th>Users / Permissions</th><th>Add</th><th>Edit</th><th>(Un)Publish</th><th>Delete</th><th>is Published ?</th></tr></thead>
 <tbody>
 <tr><th>canmoderate	</th><td>x	</td><td>x	</td><td>x	</td><td>x	</td><td>x	</td></tr>
@@ -227,15 +203,12 @@ ie: for a tv called <quote>keywords</quote> : <br />
 <p>Add this code in a chunk or a file. And use FDM's parameter &amp;script=`chunk_name` or &amp;script= `@FILE:path/to/file.htm`.</p>
 <pre>
 <code>
-&lt;script language="javascript" type="text/javascript" src="assets/plugins/tinymce2111/jscripts/tiny_mce/tiny_mce.js"&gt;&lt;/script&gt;
+&lt;script language="javascript" type="text/javascript" src="assets/plugins/tinymce/jscripts/tiny_mce/tiny_mce.js"&gt;&lt;/script&gt;
 &lt;script language="javascript" type="text/javascript"&gt;
 
-// Configuration detail check http://wiki.moxiecode.com/index.php/TinyMCE:Configuration
 tinyMCE.init({
 	theme : "advanced",
-	mode : "exact", // textareas:    Converts all textarea elements to editors when the page loads. exact: Converts elements of the specified names, as listed in the elements option.
-// This option should contain a comma separated list of element id's to convert into editor instances. This option is only used if mode is set to "exact".
-//	ie:	elements : "elm1,elm2"
+	mode : "exact",
 	elements : "content"
 });
 &lt;/script&gt;
@@ -257,7 +230,7 @@ tinyMCE.init({
 			<li><a href="#ptpl">Template</a></li>
 			<li><a href="#palias">Alias</a></li>
 </ul>
-<table class="encadre" style="width:60%;text-align:center;" summary="FDM parameters">
+<table class="encadre" style="text-align:center;" summary="FDM parameters">
 <thead><tr><th>Name</th><th>Type</th><th>Default</th><th>Meaning</th><th>Comment</th></tr></thead>
 <tbody>
 
