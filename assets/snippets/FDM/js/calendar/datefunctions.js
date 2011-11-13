@@ -64,12 +64,16 @@ function cal_gen_tsmp1 (dt_datetime) {
 }
 
 // date generating function
-function cal_gen_date1 (dt_datetime) {
-	return (
-		(dt_datetime.getDate() < 10 ? '0' : '') + dt_datetime.getDate() + "-"
-		+ (dt_datetime.getMonth() < 9 ? '0' : '') + (dt_datetime.getMonth() + 1) + "-"
-		+ dt_datetime.getFullYear()
-	);
+function cal_gen_date1 (dt_datetime,format) {
+	var yyyy = dt_datetime.getFullYear();
+	var mm   = (dt_datetime.getMonth() < 9 ? '0' : '') + (dt_datetime.getMonth() + 1);
+	var dd   = (dt_datetime.getDate() < 10 ? '0' : '') + dt_datetime.getDate();
+	var format = 'yyyy/mm/dd';
+	switch(format)
+	{
+		case 'yyyy/mm/dd':
+			return yyyy + '/' + mm + '/' + dd;
+	}
 }
 // time generating function
 function cal_gen_time1 (dt_datetime) {
@@ -98,15 +102,15 @@ function cal_prs_tsmp1 (str_datetime) {
 // date parsing function
 function cal_prs_date1 (str_date) {
 
-	var arr_date = str_date.split('-');
+	var arr_date = str_date.split('/');
 
-	if (arr_date.length != 3) return cal_error ("Invalid date format: '" + str_date + "'.\nFormat accepted is dd-mm-yyyy.");
-	if (!arr_date[0]) return cal_error ("Invalid date format: '" + str_date + "'.\nNo day of month value can be found.");
-	if (!RE_NUM.exec(arr_date[0])) return cal_error ("Invalid day of month value: '" + arr_date[0] + "'.\nAllowed values are unsigned integers.");
+	if (arr_date.length != 3) return cal_error ("Invalid date format: '" + str_date + "'.\nFormat accepted is yyyy/mm/dd.");
+	if (!arr_date[2]) return cal_error ("Invalid date format: '" + str_date + "'.\nNo day of month value can be found.");
+	if (!RE_NUM.exec(arr_date[2])) return cal_error ("Invalid day of month value: '" + arr_date[0] + "'.\nAllowed values are unsigned integers.");
 	if (!arr_date[1]) return cal_error ("Invalid date format: '" + str_date + "'.\nNo month value can be found.");
 	if (!RE_NUM.exec(arr_date[1])) return cal_error ("Invalid month value: '" + arr_date[1] + "'.\nAllowed values are unsigned integers.");
-	if (!arr_date[2]) return cal_error ("Invalid date format: '" + str_date + "'.\nNo year value can be found.");
-	if (!RE_NUM.exec(arr_date[2])) return cal_error ("Invalid year value: '" + arr_date[2] + "'.\nAllowed values are unsigned integers.");
+	if (!arr_date[0]) return cal_error ("Invalid date format: '" + str_date + "'.\nNo year value can be found.");
+	if (!RE_NUM.exec(arr_date[0])) return cal_error ("Invalid year value: '" + arr_date[2] + "'.\nAllowed values are unsigned integers.");
 
 	var dt_date = new Date();
 	dt_date.setDate(1);
@@ -114,11 +118,11 @@ function cal_prs_date1 (str_date) {
 	if (arr_date[1] < 1 || arr_date[1] > 12) return cal_error ("Invalid month value: '" + arr_date[1] + "'.\nAllowed range is 01-12.");
 	dt_date.setMonth(arr_date[1]-1);
 	 
-	if (arr_date[2] < 100) arr_date[2] = Number(arr_date[2]) + (arr_date[2] < NUM_CENTYEAR ? 2000 : 1900);
-	dt_date.setFullYear(arr_date[2]);
+	if (arr_date[0] < 100) arr_date[0] = Number(arr_date[0]) + (arr_date[0] < NUM_CENTYEAR ? 2000 : 1900);
+	dt_date.setFullYear(arr_date[0]);
 
-	var dt_numdays = new Date(arr_date[2], arr_date[1], 0);
-	dt_date.setDate(arr_date[0]);
+	var dt_numdays = new Date(arr_date[0], arr_date[1], 0);
+	dt_date.setDate(arr_date[2]);
 	if (dt_date.getMonth() != (arr_date[1]-1)) return cal_error ("Invalid day of month value: '" + arr_date[0] + "'.\nAllowed range is 01-"+dt_numdays.getDate()+".");
 
 	return (dt_date)
