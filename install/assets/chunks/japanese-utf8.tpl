@@ -16,7 +16,7 @@ div.fdm textarea {width:100%;}
 div.fdm textarea,div.fdm input, div.fdm select {font:inherit;}
 </style>
 <div class="fdm">
-<form method="post" action="[~[*id*]~]" id="fdmForm">
+<form method="post" action="[(site_url)][~[*id*]~]" id="fdmForm">
 <fieldset>
 	<legend>ページ設定</legend>
 		<input type="hidden" name="formid" value="fdmForm" />
