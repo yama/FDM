@@ -31,7 +31,6 @@ class CFDM {
 			include_once($fdm_path . 'includes/fdmchunkie.class.inc.php');
 		}
 		$this->fdm_path = $fdm_path;
-		$this->client   = $modx->getUserData();
 		$this->userT    = $modx->userLoggedIn();
 		$this->ctime    = time();
 	}
