@@ -135,16 +135,16 @@ class CFDM {
 		$this->config['topublish']=($this->user['ismoderator']||$this->user['istrusted'])?1:0;
 		// edit on an other page
 		$this->config['editorpageid']=$this->parameters['editorpageid'] ? $this->parameters['editorpageid'] :$modx->documentIdentifier;
-		$this->link['editorpageid']=$modx->makeUrl($this->config['editorpageid']);
+		$this->link['editorpageid']=$modx->makeUrl($this->config['editorpageid'],'','','full');
 		// link
 		$this->link['uchar']=($modx->config['friendly_urls'] == 1 )?'?':'&';// first GET parameter char
-		$this->link['current']=$modx->makeUrl($modx->documentIdentifier) ;
-		$this->link['parent']=$this->doc['parent']? str_replace('&amp;','&',$modx->makeUrl($this->doc['parent'])):$modx->config['site_url'];
+		$this->link['current']=$modx->makeUrl($modx->documentIdentifier,'','','full') ;
+		$this->link['parent']=$this->doc['parent']? str_replace('&amp;','&',$modx->makeUrl($this->doc['parent'],'','','full')):$modx->config['site_url'];
 		$this->link['add'] =$this->link['editorpageid'].$this->link['uchar'].'fdmaction=add'.'&fdmmodel='.$this->doc['model'].'&fdmparent='.$this->doc['parent'].'&fdmid='.$this->doc['id'];
 		$this->link['edit'] =$this->link['editorpageid'].$this->link['uchar'].'fdmaction=edit'.'&fdmid='.$this->doc['id'];
-		$this->link['delete'] = str_replace('&amp;','&',$modx->makeUrl($this->config['editorpageid'],'','&fdmaction=delete'.'&fdmid='.$this->doc['id']));
-		$this->link['publish'] = str_replace('&amp;','&',$modx->makeUrl($this->config['editorpageid'],'','&fdmaction=publish'.'&fdmid='.$this->doc['id']));
-		$this->link['unpublish'] =str_replace('&amp;','&',$modx->makeUrl($this->config['editorpageid'],'','&fdmaction=unpublish'.'&fdmid='.$this->doc['id']));
+		$this->link['delete'] = str_replace('&amp;','&',$modx->makeUrl($this->config['editorpageid'],'','&fdmaction=delete'.'&fdmid='.$this->doc['id'],'full'));
+		$this->link['publish'] = str_replace('&amp;','&',$modx->makeUrl($this->config['editorpageid'],'','&fdmaction=publish'.'&fdmid='.$this->doc['id'],'full'));
+		$this->link['unpublish'] =str_replace('&amp;','&',$modx->makeUrl($this->config['editorpageid'],'','&fdmaction=unpublish'.'&fdmid='.$this->doc['id'],'full'));
 		$this->templates['link']['tpl'] =  $this->parameters['tplLinks'] ? $this->parameters['tplLinks']:$_lang['links_template'];
 
 // begin to work ----------------------------------------------
@@ -177,11 +177,11 @@ class CFDM {
 				$_SESSION['fdm']['topublish']=$this->config['topublish'];
 				if( is_numeric($this->parameters['redirect']) )
 				{
-					$this->link['redirect'] = $modx->makeUrl($this->parameters['redirect']);
+					$this->link['redirect'] = $modx->makeUrl($this->parameters['redirect'],'','','full');
 				}
 				elseif($this->parameters['redirect']=='parent')
 				{
-					$this->link['redirect'] = $modx->makeUrl($this->link['parent']);
+					$this->link['redirect'] = $modx->makeUrl($this->link['parent'],'','','full');
 				}
 				else
 				{
