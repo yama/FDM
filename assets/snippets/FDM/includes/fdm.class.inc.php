@@ -305,7 +305,7 @@ class CFDM {
 		$params['allowhtml']              = '1';
 		$params['sendAsText']             = '1';
 		$params['autosender']             = $this->eform['autosender'];
-		$eformOutput = $modx->runSnippet('eform',$params);
+		$eformOutput = $modx->runSnippet('eForm',$params);
 		if($this->config['output'])
 		{
 			echo $eformOutput;
